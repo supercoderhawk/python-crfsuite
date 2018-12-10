@@ -10,3 +10,11 @@ MANIFEST
 conll2002-esp.crfsuite
 *.egg-info/
 .cache
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
