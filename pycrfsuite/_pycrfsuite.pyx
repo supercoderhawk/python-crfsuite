@@ -313,7 +313,7 @@ cdef class BaseTrainer(object):
         """
         self.c_trainer.append(to_seq(xseq), yseq, group)
 
-    def select(self, algorithm, type='crf1d'):
+    def select(self, algorithm, type='1d'):
         """
         Initialize the training algorithm.
 
