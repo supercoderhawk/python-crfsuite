@@ -224,6 +224,8 @@ cdef class BaseTrainer(object):
         'feature.minfreq': float,
         'feature.possible_states': _intbool,
         'feature.possible_transitions': _intbool,
+        'feature.max_seg_len': int,
+        'feature.max_order': int,
         'c1': float,
         'c2': float,
         'max_iterations': int,
