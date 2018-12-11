@@ -332,6 +332,8 @@ cdef class BaseTrainer(object):
         """
         algorithm = algorithm.lower()
         algorithm = self._ALGORITHM_ALIASES.get(algorithm, algorithm)
+        if type not in MODEL_TYPE:
+            raise ValueError("model type %s is not allowed" % type)
         if not self.c_trainer.select(algorithm, type):
             raise ValueError(
                 "Bad arguments: algorithm=%r, type=%r" % (algorithm, type)
