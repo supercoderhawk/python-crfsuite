@@ -46,7 +46,7 @@ install:
 
 script:
 - ./update_cpp.sh
-- ./.travis/run tox
+- tox
 
 deploy:
   provider: pypi
