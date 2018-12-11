@@ -18,7 +18,6 @@ CRFSUITE_VERSION = crfsuite_api.version()
 
 
 class CRFSuiteError(Exception):
-
     _messages = {
         crfsuite_api.CRFSUITEERR_UNKNOWN: "Unknown error occurred",
         crfsuite_api.CRFSUITEERR_OUTOFMEMORY: "Insufficient memory",
@@ -48,7 +47,7 @@ cdef crfsuite_api.Item to_item(x) except+:
     c_item.reserve(len(x))  # at least this amount is required
     for key in x:
         if isinstance(key, unicode):
-            c_key = (<unicode>key).encode('utf8')
+            c_key = (<unicode> key).encode('utf8')
         else:
             c_key = key
 
@@ -57,7 +56,7 @@ cdef crfsuite_api.Item to_item(x) except+:
             c_value = 1.0
             c_item.push_back(crfsuite_api.Attribute(c_key, c_value))
         else:
-            value = (<dict>x)[key]
+            value = (<dict> x)[key]
 
             if isinstance(value, (dict, list, set)):
                 # {"string_prefix": {...}}
@@ -69,12 +68,12 @@ cdef crfsuite_api.Item to_item(x) except+:
                 if isinstance(value, unicode):
                     # {"string_key": "string_value"}
                     c_key += _SEP
-                    c_key += <string>(<unicode>value).encode('utf8')
+                    c_key += <string> (<unicode> value).encode('utf8')
                     c_value = 1.0
                 elif isinstance(value, bytes):
                     # {"string_key": "string_value"}
                     c_key += _SEP
-                    c_key += <string>value
+                    c_key += <string> value
                     c_value = 1.0
                 else:
                     # {"string_key": float_value}
@@ -84,7 +83,6 @@ cdef crfsuite_api.Item to_item(x) except+:
                 c_item.push_back(crfsuite_api.Attribute(c_key, c_value))
 
     return c_item
-
 
 cdef crfsuite_api.ItemSequence to_seq(pyseq) except+:
     """
@@ -103,12 +101,11 @@ cdef crfsuite_api.ItemSequence to_seq(pyseq) except+:
     cdef crfsuite_api.ItemSequence c_seq
 
     if isinstance(pyseq, ItemSequence):
-        c_seq = (<ItemSequence>pyseq).c_seq
+        c_seq = (<ItemSequence> pyseq).c_seq
     else:
         for x in pyseq:
             c_seq.push_back(to_item(x))
     return c_seq
-
 
 cdef class ItemSequence(object):
     """
@@ -182,7 +179,7 @@ cdef class ItemSequence(object):
 
                 # XXX: (<bytes>c_attr.attr).decode('utf8') doesn't
                 # work properly in Cython 0.21
-                key = <bytes>c_attr.attr.c_str()
+                key = <bytes> c_attr.attr.c_str()
                 x[key.decode('utf8')] = c_attr.value
             seq.append(x)
         return seq
@@ -193,10 +190,8 @@ cdef class ItemSequence(object):
     def __repr__(self):
         return "<ItemSequence of size %d>" % len(self)
 
-
 def _intbool(txt):
     return bool(int(txt))
-
 
 cdef class BaseTrainer(object):
     """
@@ -264,7 +259,7 @@ cdef class BaseTrainer(object):
 
     def __cinit__(self):
         # setup message handler
-        self.c_trainer.set_handler(self, <crfsuite_api.messagefunc>self._on_message)
+        self.c_trainer.set_handler(self, <crfsuite_api.messagefunc> self._on_message)
 
         # fix segfaults, see https://github.com/chokkan/crfsuite/pull/21
         self.c_trainer.select("lbfgs", "1d")
