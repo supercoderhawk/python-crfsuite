@@ -267,7 +267,7 @@ cdef class BaseTrainer(object):
         self.c_trainer.set_handler(self, <crfsuite_api.messagefunc>self._on_message)
 
         # fix segfaults, see https://github.com/chokkan/crfsuite/pull/21
-        self.c_trainer.select("lbfgs", "crf1d")
+        self.c_trainer.select("lbfgs", "1d")
         self.c_trainer._init_hack()
 
     cdef _on_message(self, string message):
