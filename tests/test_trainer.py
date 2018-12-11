@@ -57,7 +57,7 @@ def test_training_messages(tmpdir, xseq, yseq):
     model_filename = str(tmpdir.join('model.crfsuite'))
     trainer.train(model_filename)
     assert trainer.messages
-    assert 'type: CRF1d\n' in trainer.messages
+    assert 'type: crf1d (1-st order)\n' in trainer.messages
     # print("".join(trainer.messages))
 
 
