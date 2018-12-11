@@ -13,45 +13,17 @@ matrix:
   - os: linux
     python: 2.7
     env: TOXENV=py27
-  - os: osx
-    language: generic
-    env:
-      - PYTHON='3.7.0'
-      - TOXENV=py37
-  - os: osx
-    language: generic
-    env:
-      - PYTHON='3.6.2'
-      - TOXENV=py36
-  - os: osx
-    language: generic
-    env:
-      - PYTHON='3.5.2'
-      - TOXENV=py35
-  - os: osx
-    language: generic
-    env:
-      - PYTHON='3.4.6'
-      - TOXENV=py34
-  - os: osx
-    language: generic
-    env:
-      - PYTHON='2.7.13'
-      - TOXENV=py27
-
 install:
-  - pip install tox
-  - pip install cython
-  - pip install pytest
-
+- pip install tox
+- pip install cython
+- pip install pytest
 script:
-- ./update_cpp.sh
+- "./update_cpp.sh"
 - tox
-
 deploy:
   provider: pypi
-  user: "supercoderhawk"
+  user: supercoderhawk
   password:
-    secure: "Your encrypted password"
+    secure: UklqMpW4xIOErni6uaBT/tpdXsO0tVE8+JygXPsGDuV+hMPNQyHL5e1lFZ938UZgvooRFCkdwUrKSNcZK0MZ9HI2FdlaTr34LpGFUzzMAJmah/ynlHxHzTWDbPIDmGdKBnx3+ULT0QPaU008uq+6ud89g05wxTYQuLtSQald0JWuFkLcXqkPaFv0BsycbX/Dl6NKgU3VQfMYzOPvWSIa/v22o8M1eL76pCzeDliuWhrA1q3qsw3U7K5Mnw2BoRnnikyIWgyHe3FR3ERpARrbv43AGtHRwppnmjS4yHpJZg6/K3SoZdTSpjnbAHtiGe9Jhgt51z23CH/C+Kuo9Frb/yULCGoYSwAXNqgvAM1hJ4t9uzquIY6KZYm3670QVAVqIyUDJ2luohfcpfUKR0v0SxOcQS2WbFk04OZfG4MqwK1eSLgJmeR3QgNm+EWuU/1SlY51GW+QazodxRMDy7KBOmtjgPZYSuBTkQLOwaNFxQ2tRgS3z8gI0bOxwBw+0OwmEgoYMtEdioP2aLJ7z8wv/Mn7YyPC68I9Hnj5dmgDKkvfABfJG6ETEQQ19pXug70cXES8vMRPfeXZ8ENxOUtNYz7yv7/qMMDE0NhHTBkMEzmTfk5x1AiAPrP0OAxvirhvAXzcWDrO4ASMP8WZcEjMzndCdvbMI5p/6ZMxweXVURk=
   on:
     tag: true
