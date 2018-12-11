@@ -574,7 +574,7 @@ cdef class Tagger(object):
         self._check_model(name)
         if model_type not in MODEL_TYPE:
             raise Exception('model type %s is not allowed.' % model_type)
-        if not self.c_tagger.open(name, model_type):
+        if not self.c_tagger.open(name, MODEL_TYPE[model_type]):
             raise ValueError("Error opening model file %r" % name)
         return contextlib.closing(self)
 
@@ -592,7 +592,7 @@ cdef class Tagger(object):
         if model_type not in MODEL_TYPE:
             raise Exception('model type %s is not allowed.' % model_type)
         cdef const char *v = value
-        if not self.c_tagger.open(v, len(value), model_type):
+        if not self.c_tagger.open(v, len(value), MODEL_TYPE[model_type]):
             raise ValueError("Error opening model")
         return contextlib.closing(self)
 
