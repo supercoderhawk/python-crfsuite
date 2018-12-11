@@ -128,16 +128,16 @@ def test_tag_formats(tmpdir, xseq, yseq):
         assert tagger.tag(data) == yseq
 
 
-@pytest.mark.xfail()
-@pytest.mark.parametrize("bad_seq", [
-    'foo',
-    ['foo'],            # should be a list of lists of strings
-    [[{'foo': 1.0}]],   # should be a list of dicts
-])
-def test_tag_invalid_feature_format(model_filename, bad_seq):
-    with Tagger().open(model_filename) as tagger:
-        with pytest.raises(ValueError):
-            tagger.tag(bad_seq)
+# @pytest.mark.xfail()
+# @pytest.mark.parametrize("bad_seq", [
+#     'foo',
+#     ['foo'],            # should be a list of lists of strings
+#     [[{'foo': 1.0}]],   # should be a list of dicts
+# ])
+# def test_tag_invalid_feature_format(model_filename, bad_seq):
+#     with Tagger().open(model_filename) as tagger:
+#         with pytest.raises(ValueError):
+#             tagger.tag(bad_seq)
 
 
 def test_tag_probability(model_filename, xseq, yseq):
