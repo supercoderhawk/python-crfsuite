@@ -15,6 +15,10 @@ from pycrfsuite import _dumpparser
 from pycrfsuite import _logparser
 
 CRFSUITE_VERSION = crfsuite_api.version()
+CRF1D = '1d'
+CRF1TREE = 'tree'
+SEMIMCRF = 'semim'
+MODEL_TYPE = {CRF1D: 1, CRF1TREE: 3, SEMIMCRF: 4}
 
 
 class CRFSuiteError(Exception):
@@ -552,7 +556,7 @@ cdef class Tagger(object):
     """
     cdef crfsuite_api.Tagger c_tagger
 
-    def open(self, name):
+    def open(self, name, model_type=CRF1D):
         """
         Open a model file.
 
@@ -566,11 +570,13 @@ cdef class Tagger(object):
         # may segfault if the file is invalid.
         # See https://github.com/chokkan/crfsuite/pull/24
         self._check_model(name)
-        if not self.c_tagger.open(name):
+        if model_type not in MODEL_TYPE:
+            raise Exception('model type %s is not allowed.' % model_type)
+        if not self.c_tagger.open(name, model_type):
             raise ValueError("Error opening model file %r" % name)
         return contextlib.closing(self)
 
-    def open_inmemory(self, bytes value):
+    def open_inmemory(self, bytes value, model_type=CRF1D):
         """
         Open a model from memory.
 
@@ -581,8 +587,10 @@ cdef class Tagger(object):
 
         """
         self._check_inmemory_model(value)
+        if model_type not in MODEL_TYPE:
+            raise Exception('model type %s is not allowed.' % model_type)
         cdef const char *v = value
-        if not self.c_tagger.open(v, len(value)):
+        if not self.c_tagger.open(v, len(value), model_type):
             raise ValueError("Error opening model")
         return contextlib.closing(self)
 
