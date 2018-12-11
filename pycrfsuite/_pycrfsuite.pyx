@@ -107,7 +107,12 @@ cdef crfsuite_api.ItemSequence to_seq(pyseq) except+:
     if isinstance(pyseq, ItemSequence):
         c_seq = (<ItemSequence> pyseq).c_seq
     else:
+        if not isinstance(pyseq, list) or not isinstance(pyseq, tuple):
+            raise ValueError('sequence is not list or tuple.')
+
         for x in pyseq:
+            if not isinstance(x, dict):
+                raise ValueError('Item is not dict')
             c_seq.push_back(to_item(x))
     return c_seq
 
