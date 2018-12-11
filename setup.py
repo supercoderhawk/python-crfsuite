@@ -44,14 +44,14 @@ ext_modules = [Extension('pycrfsuite._pycrfsuite',
 
 
 setup(
-    name='python-crfsuite',
-    version="0.9.6",
+    name='python-crfsuite-extension',
+    version="0.0.1",
     description="Python binding for CRFsuite",
     long_description=open('README.rst').read(),
-    author="Terry Peng, Mikhail Korobov",
-    author_email="pengtaoo@gmail.com, kmike84@gmail.com",
+    author="Supercoderhawk, Terry Peng, Mikhail Korobov",
+    author_email="supercoderhawk@gmail.com, pengtaoo@gmail.com, kmike84@gmail.com",
     license="MIT",
-    url='https://github.com/scrapinghub/python-crfsuite',
+    url='https://github.com/supercoderhawk/python-crfsuite',
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
