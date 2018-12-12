@@ -6,6 +6,7 @@ dist
 build
 _build
 MANIFEST
+pycrfsuite/_pycrfsuite.cpp
 .ipynb_checkpoints
 conll2002-esp.crfsuite
 *.egg-info/
