@@ -109,20 +109,21 @@ class CRFsuiteDumpParser(object):
                     self.result.semi_markov[MAX_SEG_LEN][label] = seg_len
                 elif line.startswith(FORWARD_STATE):
                     index = int(line[line.index('[') + 1:line.index(']')])
-                    _, length = line[line.index('(') + 1:line.index(')')]
+                    _, length = line[line.index('(') + 1:line.index(')')].split('=')
                     length = int(length)
-                    labels = line[line.rindex('='):].strip().split('|')
+                    labels = line[line.rindex('=') + 1:].strip().split('|')
                     self.result.semi_markov[FORWARD_STATE][index] = {'length': length, 'labels': labels,
                                                                      PREFIX: {}, SUFFIX: {}}
                 elif line.startswith(PREFIX):
                     index = int(line[line.index('[') + 1:line.index(']')])
                     affix_index = int(line[line.rindex('[') + 1:line.rindex(']')])
-                    prefix_states = line[:line.rindex(')'):-1].strip().split()
-                    self.result.semi_markov[FORWARD_STATE][index][PREFIX][affix_index] = prefix_states
+                    prefix_states = line[:line.rindex('=') + 1:-1].strip().split('|')
+                    prefix_state_item = {'state': prefix_states}
+                    self.result.semi_markov[FORWARD_STATE][index][PREFIX][affix_index] = prefix_state_item
                 elif line.startswith(SUFFIX):
                     index = int(line[line.index('[') + 1:line.index(']')])
                     affix_index = int(line[line.rindex('[') + 1:line.rindex(']')])
-                    suffix_states = line[:line.rindex(')'):-1].strip().split()
+                    suffix_states = line[line.rindex(')') + 1:-1].strip().split('|')
                     transition_index = int(line[line.index('=') + 1:line.rindex('(')])
                     transition_position = int(line[line.rindex('=') + 1:line.rindex(')')])
                     suffix_item = {'state': suffix_states, 'transition_index': transition_index,
