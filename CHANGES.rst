@@ -1,6 +1,15 @@
 Changes
 =======
 
+0.9.7 (2018-12-18)
+------------------
+* Add Semi-Markov CRF and Tree CRF through replacing a new CRFSuite implementation
+
+* update dump parser of corresponding Semi-Markov and Tree CRF
+
+* change library name to **python-crfsuite-extension**
+
+
 0.9.6 (2018-08-01)
 ------------------
 
