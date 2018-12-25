@@ -42,6 +42,7 @@ class ParsedDump(object):
         self.transitions = {}
         self.state_features = {}
         self.semi_markov = {MAX_SEG_LEN: {}, FORWARD_STATE: {}}
+        self.error_lines = []
 
 
 class CRFsuiteDumpParser(object):
@@ -68,7 +69,10 @@ class CRFsuiteDumpParser(object):
         elif line == '}':
             self.state = None
         else:
-            getattr(self, 'parse_%s' % self.state)(line)
+            try:
+                getattr(self, 'parse_%s' % self.state)(line)
+            except Exception as e:
+                self.result.error_lines.append(line)
 
     def parse_FILEHEADER(self, line):
         m = re.match("(\w+): (.*)", line)
